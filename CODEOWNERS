@@ -1,0 +1,7 @@
+# 폴더별 리뷰어 자동 지정 — 실제 GitHub 핸들로 교체
+# 형식: 경로  @핸들
+
+/docs/        @dayoung
+/design/      @designer-handle
+/src/         @dayoung
+/CLAUDE.md    @dayoung @designer-handle

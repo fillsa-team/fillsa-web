@@ -1,0 +1,16 @@
+name: token-diff
+on:
+  pull_request:
+    paths:
+      - 'design/tokens.json'
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Comment token diff
+        run: |
+          echo "design/tokens.json 변경 감지됨. 프론트 영향 검토 필요." >> $GITHUB_STEP_SUMMARY
+          git diff origin/${{ github.base_ref }}...HEAD -- design/tokens.json >> $GITHUB_STEP_SUMMARY || true
