@@ -19,7 +19,7 @@ export function Button({ children, variant = 'primary', href }: ButtonProps) {
     fontSize: theme.typography.button.size,
     fontWeight: theme.typography.button.weight,
     textDecoration: 'none',
-    border: variant === 'secondary' ? `1px solid ${token.border}` : 'none',
+    border: 'border' in token ? `1px solid ${token.border}` : 'none',
     background: token.bg,
     color: token.text,
     boxShadow: variant === 'primary' ? theme.shadow.cardSoft : 'none',

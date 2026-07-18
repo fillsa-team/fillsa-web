@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers 배포 설정 (대시보드 Git 연결의 `npx wrangler deploy`가 이 파일을 읽음)
+  "name": "fillsa-web",
+  "compatibility_date": "2026-07-18",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
