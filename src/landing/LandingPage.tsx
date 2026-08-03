@@ -112,14 +112,6 @@ export function LandingPage() {
   )
 
   useEffect(() => {
-    const previousTitle = document.title
-    document.title = '필사 — 하루 한 문장, 나만의 기록'
-    return () => {
-      document.title = previousTitle
-    }
-  }, [])
-
-  useEffect(() => {
     const updateScrolled = () =>
       setIsScrolled(window.scrollY > theme.component.landing.motion.navigationScrollThreshold)
 
