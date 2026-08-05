@@ -167,9 +167,9 @@ export const footerLinkGroups: FooterLinkGroup[] = [
   {
     title: '서비스',
     links: [
-      { label: '기능 소개', href: '#features' },
-      { label: '배경테마 선택', href: '#themes' },
-      { label: '새로운 기능', href: '#new' },
+      { label: '기능 소개', href: '/#features' },
+      { label: '배경테마 선택', href: '/#themes' },
+      { label: '새로운 기능', href: '/#new' },
       {
         label: '릴리즈 노트',
         href: '/release-notes',

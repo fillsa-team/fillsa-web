@@ -219,21 +219,6 @@
 .team-download-callout p { margin: 10px 0 0; color: var(--ink-60); font-size: 13px; }
 .team-signoff { font-weight: 600; }
 
-.team-footer { padding: 0; background: var(--ink); color: rgba(251,246,233,0.5); }
-.team-footer-inner {
-  width: min(100% - 48px, 1120px);
-  min-height: 112px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  font-size: 13px;
-}
-.team-footer-inner > a { display: flex; margin-right: auto; }
-.team-footer-inner > div { display: flex; gap: 20px; }
-.team-footer-inner > div a { color: rgba(251,246,233,0.45); text-decoration: none; }
-.team-footer-inner > div a:hover { color: rgba(251,246,233,0.9); }
-
 @media (max-width: 640px) {
   .team-header { padding: 0 var(--landing-nav-mobile-x); }
   .team-main { width: min(100% - 32px, 880px); padding: 64px 0 88px; }
@@ -252,12 +237,4 @@
   .team-copy > p { font-size: 15px; line-height: 1.9; word-break: normal; }
   .team-origin-note,
   .team-download-callout { padding: 22px; }
-  .team-footer-inner {
-    width: min(100% - 32px, 1120px);
-    padding: 28px 0;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .team-footer-inner > a { width: 100%; }
-  .team-footer-inner > div { width: 100%; }
 }

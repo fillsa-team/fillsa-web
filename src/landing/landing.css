@@ -517,7 +517,7 @@ section { padding: var(--landing-section-y) var(--landing-section-x); }
 .download-note { font-size: 13px; color: var(--ink-30); }
 
 /* ── FOOTER ── */
-footer {
+.site-footer {
   background: var(--ink); color: rgba(251,246,233,0.45);
   padding: 60px 48px 40px;
 }

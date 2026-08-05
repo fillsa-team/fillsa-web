@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import fillsaLogo from '../assets/fillsa-logo.svg'
-import fillsaLogoFooter from '../assets/fillsa-logo-footer.svg'
 import { landingCssVariables } from '../landing/cssVariables'
+import { LandingFooter } from '../landing/LandingFooter'
 import { MobileNavigationMenu } from '../landing/MobileNavigationMenu'
 import { privacyDocument, termsDocument, type LegalTable } from './legalDocuments'
 import './legal.css'
@@ -119,18 +119,7 @@ export function LegalPage({ document: documentType }: LegalPageProps) {
         </article>
       </main>
 
-      <footer className="legal-footer">
-        <div className="legal-footer-inner">
-          <a href="/" aria-label="Fillsa 홈으로 이동">
-            <img src={fillsaLogoFooter} width="64" height="30" alt="Fillsa" />
-          </a>
-          <span>© 2025 Fillsa. All rights reserved.</span>
-          <div>
-            <a aria-current={documentType === 'terms' ? 'page' : undefined} href="/terms">이용약관</a>
-            <a aria-current={documentType === 'privacy' ? 'page' : undefined} href="/privacy">개인정보처리방침</a>
-          </div>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   )
 }
