@@ -1,9 +1,36 @@
+import { useEffect, useRef, useState } from 'react'
 import fillsaLogoFooter from '../assets/fillsa-logo-footer.svg'
 import { footerLinkGroups } from './data'
 
 export function LandingFooter() {
+  const footerRef = useRef<HTMLElement>(null)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    const footer = footerRef.current
+    if (!footer) return
+
+    const visibilityTarget = document.getElementById('download') ?? footer
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const hasReachedTarget = entry.isIntersecting || entry.boundingClientRect.top < 0
+        setShowScrollTop(hasReachedTarget)
+      },
+      { threshold: 0.1 },
+    )
+
+    observer.observe(visibilityTarget)
+    return () => observer.disconnect()
+  }, [])
+
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+  }
+
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" ref={footerRef}>
       <div className="footer-inner">
         <div className="footer-brand">
           <a href="/" aria-label="Fillsa 홈">
@@ -39,11 +66,18 @@ export function LandingFooter() {
       </div>
       <div className="footer-bottom">
         <span>© 2025 Fillsa. All rights reserved.</span>
-        <div className="footer-legal">
-          <a href="/terms">이용약관</a>
-          <a href="/privacy">개인정보처리방침</a>
-        </div>
       </div>
+      <button
+        className={`scroll-top-button${showScrollTop ? ' visible' : ''}`}
+        type="button"
+        onClick={scrollToTop}
+        aria-label="페이지 맨 위로 이동"
+        aria-hidden={!showScrollTop}
+        tabIndex={showScrollTop ? 0 : -1}
+      >
+        <span aria-hidden="true">↑</span>
+        맨 위로
+      </button>
     </footer>
   )
 }
