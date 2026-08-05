@@ -172,8 +172,7 @@ export const footerLinkGroups: FooterLinkGroup[] = [
       { label: '새로운 기능', href: '#new' },
       {
         label: '릴리즈 노트',
-        href: 'https://slashpage.com/fillsa/943zqpmqrxqdg2wnvy87',
-        external: true,
+        href: '/release-notes',
       },
     ],
   },
@@ -182,8 +181,7 @@ export const footerLinkGroups: FooterLinkGroup[] = [
     links: [
       {
         label: '팀 노트',
-        href: 'https://slashpage.com/fillsa/dwy5rvmjg86r52p46zn9',
-        external: true,
+        href: '/team-notes',
       },
     ],
   },
@@ -192,13 +190,11 @@ export const footerLinkGroups: FooterLinkGroup[] = [
     links: [
       {
         label: '서비스 이용약관',
-        href: 'https://slashpage.com/fillsa/7vgjr4m1n5gkk2dwpy86',
-        external: true,
+        href: '/terms',
       },
       {
         label: '개인정보처리방침',
-        href: 'https://slashpage.com/fillsa/3p4kj92yn5qwkm57q1x8',
-        external: true,
+        href: '/privacy',
       },
     ],
   },

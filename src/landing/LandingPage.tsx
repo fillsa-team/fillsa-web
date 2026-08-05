@@ -16,6 +16,7 @@ import {
   themeCards,
 } from './data'
 import { useMediaQuery } from './useMediaQuery'
+import { MobileNavigationMenu } from './MobileNavigationMenu'
 import './landing.css'
 
 function useTypewriter() {
@@ -170,7 +171,7 @@ export function LandingPage() {
   return (
     <main ref={pageRef} className={pageClasses} style={landingCssVariables}>
       <nav id="main-nav" className={isScrolled ? 'nav-scrolled' : undefined}>
-        <a href="#" className="nav-logo" aria-label="Fillsa 홈">
+        <a href="#" className="nav-logo" aria-label="Fillsa 홈" onClick={closeMobileMenu}>
           <img src={fillsaLogo} width="64" height="30" alt="Fillsa" />
         </a>
         <ul className="nav-links">
@@ -195,19 +196,11 @@ export function LandingPage() {
         </button>
       </nav>
 
-      <div
-        className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}
+      <MobileNavigationMenu
         id="mobile-menu"
-      >
-        {navigationItems.map((item) => (
-          <a key={item.href} href={item.href} onClick={closeMobileMenu}>
-            {item.label}
-          </a>
-        ))}
-        <ExternalLink href={GOOGLE_PLAY_URL} className="btn-primary">
-          Android 다운로드
-        </ExternalLink>
-      </div>
+        open={mobileMenuOpen}
+        onClose={closeMobileMenu}
+      />
 
       <section className="hero">
         <div className="hero-badge">리뉴얼 출시</div>
@@ -391,8 +384,10 @@ export function LandingPage() {
                   <>
                     <div className="step-content">
                       <div className="step-num">{step.number}</div>
-                      <div className="step-title">{step.title}</div>
-                      <p className="step-desc">{step.description}</p>
+                      <div className="step-text">
+                        <div className="step-title">{step.title}</div>
+                        <p className="step-desc">{step.description}</p>
+                      </div>
                     </div>
                     <div className="step-screen">
                       <img src={step.image} alt={step.imageAlt} />
@@ -405,8 +400,10 @@ export function LandingPage() {
                     </div>
                     <div className="step-content">
                       <div className="step-num">{step.number}</div>
-                      <div className="step-title">{step.title}</div>
-                      <p className="step-desc">{step.description}</p>
+                      <div className="step-text">
+                        <div className="step-title">{step.title}</div>
+                        <p className="step-desc">{step.description}</p>
+                      </div>
                     </div>
                   </>
                 )}
@@ -488,12 +485,8 @@ export function LandingPage() {
         <div className="footer-bottom">
           <span>© 2025 Fillsa. All rights reserved.</span>
           <div className="footer-legal">
-            <ExternalLink href="https://slashpage.com/fillsa/7vgjr4m1n5gkk2dwpy86">
-              이용약관
-            </ExternalLink>
-            <ExternalLink href="https://slashpage.com/fillsa/3p4kj92yn5qwkm57q1x8">
-              개인정보처리방침
-            </ExternalLink>
+            <a href="/terms">이용약관</a>
+            <a href="/privacy">개인정보처리방침</a>
           </div>
         </div>
       </footer>
