@@ -170,8 +170,8 @@ export function LandingPage() {
   return (
     <main ref={pageRef} className={pageClasses} style={landingCssVariables}>
       <nav id="main-nav" className={isScrolled ? 'nav-scrolled' : undefined}>
-        <a href="#" className="nav-logo" aria-label="Fillsa 홈" onClick={closeMobileMenu}>
-          <img src={fillsaLogo} width="64" height="30" alt="Fillsa" />
+        <a href="#" className="nav-logo" aria-label="필사 홈" onClick={closeMobileMenu}>
+          <img src={fillsaLogo} width="64" height="30" alt="필사 Fillsa" />
         </a>
         <ul className="nav-links">
           {navigationItems.map((item) => (
@@ -225,7 +225,7 @@ export function LandingPage() {
         <div className="hero-mockup fade-up">
           <div className="phone-frame">
             <div className="phone-status">
-              <img src={fillsaLogo} width="64" height="30" alt="Fillsa" />
+              <img src={fillsaLogo} width="64" height="30" alt="필사 Fillsa" />
               <div className="phone-streak">
                 <span>🔥</span> 100일
               </div>

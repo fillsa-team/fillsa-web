@@ -15,7 +15,7 @@ export function ReleaseNoteDetailPage({ slug }: ReleaseNoteDetailPageProps) {
   }
 
   return (
-    <TeamNotesLayout title={`${note.title.replace('📢 ', '')} | Fillsa`}>
+    <TeamNotesLayout>
       <main className="release-main release-detail-main">
         <a className="release-back-link" href="/release-notes">← 릴리즈 노트 목록</a>
 
@@ -61,7 +61,7 @@ export function ReleaseNoteDetailPage({ slug }: ReleaseNoteDetailPageProps) {
 
 function ReleaseNotesPageFallback() {
   return (
-    <TeamNotesLayout title="Release Notes | Fillsa">
+    <TeamNotesLayout>
       <main className="release-main release-empty">
         <h1>릴리즈 노트를 찾을 수 없습니다.</h1>
         <a href="/release-notes">릴리즈 노트 목록으로 돌아가기</a>
