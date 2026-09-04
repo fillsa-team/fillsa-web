@@ -3,6 +3,7 @@ import fillsaLogo from '../assets/fillsa-logo.svg'
 import { landingCssVariables } from '../landing/cssVariables'
 import { LandingFooter } from '../landing/LandingFooter'
 import { MobileNavigationMenu } from '../landing/MobileNavigationMenu'
+import { titleForPath } from '../seo/routes'
 import { privacyDocument, termsDocument, type LegalTable } from './legalDocuments'
 import './legal.css'
 
@@ -60,9 +61,9 @@ export function LegalPage({ document: documentType }: LegalPageProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    window.document.title = `${legalDocument.title} | Fillsa`
+    window.document.title = titleForPath(`/${documentType}`)
     window.scrollTo(0, 0)
-  }, [legalDocument.title])
+  }, [documentType])
 
   return (
     <div className="legal-page" style={landingCssVariables}>

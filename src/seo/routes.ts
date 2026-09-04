@@ -91,3 +91,10 @@ export const routes: RouteMeta[] = [
     jsonLd: [websiteJsonLd],
   },
 ]
+
+// 클라이언트 라우팅으로 화면을 바꿀 때 document.title 을 프리렌더된 <title> 과 같은 값으로 맞춘다.
+// 크롤러가 보는 정적 title 과 사용자 탭에 뜨는 title 이 어긋나면 구글이 title 을 임의로 재작성하는 빌미가 된다.
+export function titleForPath(pathname: string) {
+  const normalized = pathname.replace(/\/+$/, '') || '/'
+  return routes.find((route) => route.path === normalized)?.title ?? routes[0].title
+}

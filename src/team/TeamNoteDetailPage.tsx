@@ -5,7 +5,7 @@ import { TeamNotesLayout } from './TeamNotesLayout'
 
 export function TeamNoteDetailPage() {
   return (
-    <TeamNotesLayout title="우리가 필사(Fillsa)를 만든 이유 | Fillsa">
+    <TeamNotesLayout>
       <main className="team-main team-detail-main">
         <a className="team-back-link" href="/team-notes">← 팀 노트 목록</a>
 

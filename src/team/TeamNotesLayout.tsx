@@ -3,20 +3,20 @@ import fillsaLogo from '../assets/fillsa-logo.svg'
 import { landingCssVariables } from '../landing/cssVariables'
 import { LandingFooter } from '../landing/LandingFooter'
 import { MobileNavigationMenu } from '../landing/MobileNavigationMenu'
+import { titleForPath } from '../seo/routes'
 import './team-notes.css'
 
 interface TeamNotesLayoutProps {
   children: ReactNode
-  title: string
 }
 
-export function TeamNotesLayout({ children, title }: TeamNotesLayoutProps) {
+export function TeamNotesLayout({ children }: TeamNotesLayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    window.document.title = title
+    window.document.title = titleForPath(window.location.pathname)
     window.scrollTo(0, 0)
-  }, [title])
+  }, [])
 
   return (
     <div className="team-notes-page" style={landingCssVariables}>
@@ -24,10 +24,10 @@ export function TeamNotesLayout({ children, title }: TeamNotesLayoutProps) {
         <a
           className="team-logo"
           href="/"
-          aria-label="Fillsa 홈으로 이동"
+          aria-label="필사 홈으로 이동"
           onClick={() => setMenuOpen(false)}
         >
-          <img src={fillsaLogo} width="64" height="30" alt="Fillsa" />
+          <img src={fillsaLogo} width="64" height="30" alt="필사 Fillsa" />
         </a>
         <button
           className="team-hamburger"

@@ -3,7 +3,7 @@ import { teamNotes } from './teamNotesData'
 
 export function TeamNotesPage() {
   return (
-    <TeamNotesLayout title="Team Notes | Fillsa">
+    <TeamNotesLayout>
       <main className="team-main team-list-main">
         <header className="team-page-heading">
           <p>TEAM</p>

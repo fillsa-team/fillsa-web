@@ -4,7 +4,7 @@ import './release-notes.css'
 
 export function ReleaseNotesPage() {
   return (
-    <TeamNotesLayout title="Release Notes | Fillsa">
+    <TeamNotesLayout>
       <main className="release-main">
         <header className="release-page-heading">
           <p>UPDATES</p>
