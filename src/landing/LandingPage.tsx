@@ -1,18 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import appStoreIcon from '../assets/app-store.svg'
 import fillsaLogo from '../assets/fillsa-logo.svg'
-import fillsaLogoFooter from '../assets/fillsa-logo-footer.svg'
 import googlePlayIcon from '../assets/google-play.svg'
-import renewalCalendar from '../assets/landing/renewal-calendar.png'
-import renewalDarkCalendar from '../assets/landing/renewal-dark-calendar.png'
-import renewalDarkHome from '../assets/landing/renewal-dark-home.png'
-import renewalDarkWrite from '../assets/landing/renewal-dark-write.png'
-import renewalHome from '../assets/landing/renewal-home.png'
-import renewalWrite from '../assets/landing/renewal-write.png'
 import { theme } from '../theme/tokens'
 import { landingCssVariables } from './cssVariables'
 import {
   GOOGLE_PLAY_URL,
+  heroQuotes,
   howSteps,
   navigationItems,
   reflectionItems,
@@ -24,45 +18,57 @@ import { LandingFooter } from './LandingFooter'
 import { MobileNavigationMenu } from './MobileNavigationMenu'
 import './landing.css'
 
-type ScreenMode = 'light' | 'dark'
-type ScreenKind = 'home' | 'write' | 'calendar'
+function useTypewriter() {
+  const [text, setText] = useState(heroQuotes[0].text)
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
 
-const screenAssets: Record<ScreenMode, Record<ScreenKind, string>> = {
-  light: { home: renewalHome, write: renewalWrite, calendar: renewalCalendar },
-  dark: { home: renewalDarkHome, write: renewalDarkWrite, calendar: renewalDarkCalendar },
-}
+  useEffect(() => {
+    if (reducedMotion) {
+      setText(heroQuotes[0].text)
+      return
+    }
 
-function RenewalScreen({
-  kind,
-  mode,
-  alt,
-}: {
-  kind: ScreenKind
-  mode: ScreenMode
-  alt: string
-}) {
-  const src = screenAssets[mode][kind]
+    let quoteIndex = 0
+    let characterIndex = 0
+    let deleting = false
+    let timeoutId = 0
 
-  if (kind === 'write') {
-    return (
-      <div className="write-composite">
-        <div className="write-main">
-          <div className="write-content">
-            <img src={src} alt={alt} />
-          </div>
-          <div className="write-spacer" />
-          <div className="write-toolbar" aria-hidden="true">
-            <img src={src} alt="" />
-          </div>
-        </div>
-        <div className="write-keyboard" aria-hidden="true">
-          <img src={src} alt="" />
-        </div>
-      </div>
-    )
-  }
+    const tick = () => {
+      const quote = heroQuotes[quoteIndex].text
 
-  return <img className={`renewal-screen renewal-screen-${kind}`} src={src} alt={alt} />
+      if (!deleting) {
+        setText(quote.slice(0, characterIndex))
+        characterIndex += 1
+
+        if (characterIndex > quote.length) {
+          deleting = true
+          timeoutId = window.setTimeout(tick, theme.component.landing.motion.typewriterPauseMs)
+          return
+        }
+      } else {
+        setText(quote.slice(0, characterIndex))
+        characterIndex -= 1
+
+        if (characterIndex < 0) {
+          deleting = false
+          quoteIndex = (quoteIndex + 1) % heroQuotes.length
+          characterIndex = 0
+        }
+      }
+
+      timeoutId = window.setTimeout(
+        tick,
+        deleting
+          ? theme.component.landing.motion.typewriterDeletingIntervalMs
+          : theme.component.landing.motion.typewriterTypingIntervalMs,
+      )
+    }
+
+    tick()
+    return () => window.clearTimeout(timeoutId)
+  }, [reducedMotion])
+
+  return text
 }
 
 function ExternalLink({
@@ -91,7 +97,7 @@ export function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [selectedReflectionId, setSelectedReflectionId] = useState(reflectionItems[0].id)
-  const [screenMode, setScreenMode] = useState<ScreenMode>('light')
+  const typedQuote = useTypewriter()
   const breakpoints = theme.component.landing.breakpoint
   const isMobile = useMediaQuery(`(max-width: ${breakpoints.mobile}px)`)
   const isCompact = useMediaQuery(`(max-width: ${breakpoints.compact}px)`)
@@ -155,40 +161,17 @@ export function LandingPage() {
     isCompact ? 'is-compact' : '',
     isWide ? 'is-wide' : '',
     reducedMotion ? 'reduce-motion' : '',
-    screenMode === 'dark' ? 'dark-mode' : '',
   ]
     .filter(Boolean)
     .join(' ')
 
   const closeMobileMenu = () => setMobileMenuOpen(false)
-  const pageStyle =
-    screenMode === 'dark'
-      ? {
-          ...landingCssVariables,
-          '--cream': '#212121',
-          '--cream-dark': '#2c2c2c',
-          '--cream-mid': '#292929',
-          '--ink-60': 'rgba(255,255,255,.62)',
-          '--ink-30': 'rgba(255,255,255,.38)',
-          '--ink-10': 'rgba(255,255,255,.08)',
-          '--purple': '#a39af8',
-          '--purple-pale': 'rgba(92,101,255,.18)',
-          '--landing-nav-bg': 'rgba(33,33,33,.92)',
-          '--landing-nav-bg-scrolled': 'rgba(33,33,33,.97)',
-          '--landing-nav-border': 'rgba(255,255,255,.08)',
-        }
-      : landingCssVariables
 
   return (
-    <main ref={pageRef} className={pageClasses} style={pageStyle}>
+    <main ref={pageRef} className={pageClasses} style={landingCssVariables}>
       <nav id="main-nav" className={isScrolled ? 'nav-scrolled' : undefined}>
         <a href="#" className="nav-logo" aria-label="필사 홈" onClick={closeMobileMenu}>
-          <img
-            src={screenMode === 'dark' ? fillsaLogoFooter : fillsaLogo}
-            width="64"
-            height="30"
-            alt="필사 Fillsa"
-          />
+          <img src={fillsaLogo} width="64" height="30" alt="필사 Fillsa" />
         </a>
         <ul className="nav-links">
           {navigationItems.map((item) => (
@@ -239,50 +222,27 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="phone-showcase fade-up" aria-label="리뉴얼 앱 화면 모션 미리보기">
-          <div className="mode-control">
-            <div className="mode-buttons" role="group" aria-label="앱 화면 모드 선택">
-              {(['light', 'dark'] as const).map((mode) => (
-                <button
-                  className="mode-button"
-                  type="button"
-                  key={mode}
-                  aria-pressed={screenMode === mode}
-                  onClick={() => setScreenMode(mode)}
-                >
-                  {mode === 'light' ? '라이트 모드' : '다크 모드'}
-                </button>
-              ))}
+        <div className="hero-mockup fade-up">
+          <div className="phone-frame">
+            <div className="phone-status">
+              <img src={fillsaLogo} width="64" height="30" alt="필사 Fillsa" />
+              <div className="phone-streak">
+                <span>🔥</span> 100일
+              </div>
             </div>
-          </div>
-          <div className="motion-viewport">
-            <div className="motion-track">
-              {[false, true].map((duplicate) => (
-                <div className="motion-set" key={String(duplicate)} aria-hidden={duplicate || undefined}>
-                  {(['home', 'write', 'calendar'] as const).map((kind) => (
-                    <figure className="motion-card" key={kind}>
-                      <div className="motion-screen">
-                        <RenewalScreen
-                          kind={kind}
-                          mode={screenMode}
-                          alt={
-                            duplicate
-                              ? ''
-                              : kind === 'home'
-                                ? '리뉴얼 홈 화면'
-                                : kind === 'write'
-                                  ? '리뉴얼 필사 화면'
-                                  : '리뉴얼 캘린더 화면'
-                          }
-                        />
-                      </div>
-                      <figcaption>
-                        {kind === 'home' ? '오늘의 홈' : kind === 'write' ? '필사하기' : '기록 캘린더'}
-                      </figcaption>
-                    </figure>
-                  ))}
+            <div className="quote-card">
+              <div className="quote-card-label">오늘의 필사</div>
+              <div className="quote-card-text">{typedQuote}</div>
+              <div className="quote-card-source">파울로 코엘료, 연금술사</div>
+            </div>
+            <div className="streak-row" aria-label="주간 필사 기록">
+              {['월', '화', '수', '목', '금'].map((day) => (
+                <div className="streak-dot done" key={day}>
+                  {day}
                 </div>
               ))}
+              <div className="streak-dot today">토</div>
+              <div className="streak-dot empty">일</div>
             </div>
           </div>
         </div>
@@ -415,25 +375,37 @@ export function LandingPage() {
           </div>
           <div className="steps-with-screens fade-up">
             {howSteps.map((step) => (
-              <div className="step-row" key={step.number}>
-                <div className="step-screen">
-                  <div className="screen-card">
-                    <div className="demo-screen">
-                      <RenewalScreen
-                        kind={step.screenKind}
-                        mode={screenMode}
-                        alt={step.imageAlt}
-                      />
+              <div
+                className={`step-row${step.reverse ? ' step-row-reverse' : ''}`}
+                key={step.number}
+              >
+                {step.reverse ? (
+                  <>
+                    <div className="step-content">
+                      <div className="step-num">{step.number}</div>
+                      <div className="step-text">
+                        <div className="step-title">{step.title}</div>
+                        <p className="step-desc">{step.description}</p>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="step-content">
-                  <div className="step-num">{step.number}</div>
-                  <div className="step-text">
-                    <div className="step-title">{step.title}</div>
-                    <p className="step-desc">{step.description}</p>
-                  </div>
-                </div>
+                    <div className="step-screen">
+                      <img src={step.image} alt={step.imageAlt} />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="step-screen">
+                      <img src={step.image} alt={step.imageAlt} />
+                    </div>
+                    <div className="step-content">
+                      <div className="step-num">{step.number}</div>
+                      <div className="step-text">
+                        <div className="step-title">{step.title}</div>
+                        <p className="step-desc">{step.description}</p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
