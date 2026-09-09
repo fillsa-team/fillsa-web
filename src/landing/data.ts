@@ -1,7 +1,3 @@
-import appScreen1 from '../assets/app-screen-1.png'
-import appScreen2 from '../assets/app-screen-2.png'
-import appScreen3 from '../assets/app-screen-3.png'
-
 export const GOOGLE_PLAY_URL =
   'https://play.google.com/store/apps/details?id=com.arakene.fillsa'
 
@@ -41,9 +37,8 @@ export interface HowStep {
   number: number
   title: string
   description: string
-  image: string
+  screenKind: 'home' | 'write' | 'calendar'
   imageAlt: string
-  reverse?: boolean
 }
 
 export interface FooterLink {
@@ -58,8 +53,8 @@ export interface FooterLinkGroup {
 }
 
 export const navigationItems: NavigationItem[] = [
-  { label: '배경테마 선택', href: '#themes' },
   { label: '새로운 기능', href: '#new' },
+  { label: '배경테마 선택', href: '#themes' },
   { label: '사용법', href: '#how' },
   { label: '다운로드', href: '#download' },
 ]
@@ -138,28 +133,24 @@ export const renewalFeatures: RenewalFeatureItem[] = [
 export const howSteps: HowStep[] = [
   {
     number: 1,
-    title: '문장을 고르세요',
-    description:
-      '마음에 드는 문장을 직접 입력하거나, 오늘의 추천 문장 중에서 선택하세요. 배경 이미지도 함께 업로드할 수 있어요.',
-    image: appScreen1,
-    imageAlt: '앱 화면 1',
+    title: '오늘의 문장을 만나요',
+    description: '날짜와 함께 하루 한 문장을 확인하고, 오늘의 질문으로 생각을 열어요.',
+    screenKind: 'home',
+    imageAlt: '오늘의 문장과 질문을 보여주는 리뉴얼 홈',
   },
   {
     number: 2,
-    title: '직접 써보세요',
-    description:
-      '원하는 영역을 선택하고 타이핑하세요. 필사한 항목은 메모 화면으로 이동해 더 깊이 기록할 수 있어요.',
-    image: appScreen2,
-    imageAlt: '앱 화면 2',
-    reverse: true,
+    title: '천천히 따라 써요',
+    description: '문장을 한 글자씩 따라 쓰며 잠시 멈추고, 오늘의 생각에 집중해요.',
+    screenKind: 'write',
+    imageAlt: '오늘의 문장을 따라 쓰는 필사 화면',
   },
   {
     number: 3,
-    title: '기록을 쌓아가세요',
-    description:
-      '캘린더에서 날짜별 필사 기록을 확인하고, 명언 리스트로 이동해 쌓인 문장들을 다시 돌아보세요.',
-    image: appScreen3,
-    imageAlt: '앱 화면 3',
+    title: '쌓인 기록을 돌아봐요',
+    description: '캘린더에서 날짜별 기록과 연속 필사를 한눈에 확인해요.',
+    screenKind: 'calendar',
+    imageAlt: '필사 기록을 보여주는 리뉴얼 캘린더',
   },
 ]
 
@@ -167,7 +158,7 @@ export const footerLinkGroups: FooterLinkGroup[] = [
   {
     title: '서비스',
     links: [
-      { label: '기능 소개', href: '/#features' },
+      { label: '기능 소개', href: '/#new' },
       { label: '배경테마 선택', href: '/#themes' },
       { label: '새로운 기능', href: '/#new' },
       {
