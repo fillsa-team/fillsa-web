@@ -956,32 +956,25 @@ section { padding: var(--landing-section-y) var(--landing-section-x); }
   position: relative;
   flex: none;
   width: 100%;
-  aspect-ratio: 360 / 322;
+  aspect-ratio: 360 / 323;
   overflow: hidden;
   background: #202129;
 }
 .write-content img,
-.write-toolbar img,
-.write-keyboard img {
+.write-toolbar img {
   display: block;
   width: 100%;
   height: auto;
   object-fit: fill;
 }
+.write-keyboard img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
 .write-content img { transform: translateY(-4.167%); }
 .write-toolbar img { transform: translateY(-48.611%); }
-.write-keyboard img { transform: translateY(-55.278%); }
-.write-keyboard::after {
-  content: '';
-  position: absolute;
-  top: 84.161%;
-  left: 75.278%;
-  width: 1.945%;
-  height: 13.354%;
-  border-radius: 0 3px 3px 0;
-  background: #393941;
-  pointer-events: none;
-}
 
 @keyframes screen-marquee {
   to { transform: translateX(-50%); }

@@ -8,6 +8,7 @@ import renewalDarkCalendar from '../assets/landing/renewal-dark-calendar.png'
 import renewalDarkHome from '../assets/landing/renewal-dark-home.png'
 import renewalDarkWrite from '../assets/landing/renewal-dark-write.png'
 import renewalHome from '../assets/landing/renewal-home.png'
+import renewalKeyboard from '../assets/landing/renewal-keyboard.png'
 import renewalWrite from '../assets/landing/renewal-write.png'
 import { theme } from '../theme/tokens'
 import { landingCssVariables } from './cssVariables'
@@ -56,7 +57,7 @@ function RenewalScreen({
           </div>
         </div>
         <div className="write-keyboard" aria-hidden="true">
-          <img src={src} alt="" />
+          <img src={renewalKeyboard} alt="" />
         </div>
       </div>
     )
