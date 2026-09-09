@@ -168,7 +168,12 @@ nav.nav-scrolled { background: var(--landing-nav-bg-scrolled); }
   justify-content: center; margin-bottom: 64px;
   position: relative; z-index: 1;
 }
-.hero-actions .btn-primary  { padding: 14px 30px; font-size: 15px; border-radius: 12px; }
+.hero-actions .btn-primary  {
+  padding: 14px 30px;
+  border-radius: 12px;
+  background: #6b5fe4;
+  font-size: 15px;
+}
 .hero-actions .btn-outline   { padding: 14px 30px; font-size: 15px; border-radius: 12px; }
 
 /* ── Mock phone card ── */
@@ -298,7 +303,6 @@ section { padding: var(--landing-section-y) var(--landing-section-x); }
   animation: slide var(--landing-theme-duration) linear infinite;
   width: max-content;
 }
-.themes-track:hover { animation-play-state: paused; }
 @keyframes slide {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -771,6 +775,10 @@ section { padding: var(--landing-section-y) var(--landing-section-x); }
 .hero-store-stack p {
   color: rgba(26,23,20,0.4);
   font-size: 12px;
+}
+
+.dark-mode .hero-store-stack p {
+  color: rgba(255,255,255,0.72);
 }
 
 .themes-description { margin: 0 auto; }
