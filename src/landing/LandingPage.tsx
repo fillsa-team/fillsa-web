@@ -93,6 +93,8 @@ export function LandingPage() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [selectedReflectionId, setSelectedReflectionId] = useState(reflectionItems[0].id)
   const [screenMode, setScreenMode] = useState<ScreenMode>('light')
+  const screenAssetPromisesRef = useRef(new Map<string, Promise<void>>())
+  const modeChangeIdRef = useRef(0)
   const breakpoints = theme.component.landing.breakpoint
   const isMobile = useMediaQuery(`(max-width: ${breakpoints.mobile}px)`)
   const isCompact = useMediaQuery(`(max-width: ${breakpoints.compact}px)`)
@@ -105,6 +107,43 @@ export function LandingPage() {
       reflectionItems[0],
     [selectedReflectionId],
   )
+
+  const ensureScreenAssetReady = (src: string) => {
+    const existingPromise = screenAssetPromisesRef.current.get(src)
+    if (existingPromise) {
+      return existingPromise
+    }
+
+    const promise = new Promise<void>((resolve) => {
+      const image = new Image()
+      image.onload = () => {
+        void image.decode().catch(() => undefined).finally(resolve)
+      }
+      image.onerror = () => resolve()
+      image.src = src
+    })
+
+    screenAssetPromisesRef.current.set(src, promise)
+    return promise
+  }
+
+  const changeScreenMode = async (mode: ScreenMode) => {
+    if (mode === screenMode) {
+      return
+    }
+
+    const changeId = ++modeChangeIdRef.current
+    await Promise.all(Object.values(screenAssets[mode]).map(ensureScreenAssetReady))
+
+    if (changeId === modeChangeIdRef.current) {
+      setScreenMode(mode)
+    }
+  }
+
+  useEffect(() => {
+    const allScreenAssets = Object.values(screenAssets).flatMap((assets) => Object.values(assets))
+    void Promise.all(allScreenAssets.map(ensureScreenAssetReady))
+  }, [])
 
   useEffect(() => {
     const updateScrolled = () =>
@@ -249,7 +288,7 @@ export function LandingPage() {
                   type="button"
                   key={mode}
                   aria-pressed={screenMode === mode}
-                  onClick={() => setScreenMode(mode)}
+                  onClick={() => void changeScreenMode(mode)}
                 >
                   {mode === 'light' ? '라이트 모드' : '다크 모드'}
                 </button>
