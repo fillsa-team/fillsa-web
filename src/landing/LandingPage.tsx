@@ -263,7 +263,9 @@ export function LandingPage() {
         <h1 className="hero-title">
           하루 한 문장,
           <br />
-          <span className="highlight">생각을 남기고</span> 감정을 정리해요.
+          <span className="highlight">생각을 남기고</span> 감정을
+          <br />
+          정리해요.
         </h1>
         <p className="hero-sub">
           좋아하는 문장을 직접 필사하고,
