@@ -42,6 +42,7 @@ export const landingCssVariables: LandingCssProperties = {
   '--landing-hero-title-wide': `${landing.hero.titleWideSize}px`,
   '--landing-hero-title-compact': `${landing.hero.titleCompactSize}px`,
   '--landing-theme-gap': `${landing.themes.trackGap}px`,
+  '--landing-theme-loop-offset': `${landing.themes.trackGap / 2}px`,
   '--landing-theme-duration': `${landing.motion.themeMarqueeDurationMs}ms`,
   '--landing-theme-card-width': `${landing.themes.cardWidth}px`,
   '--landing-theme-card-height': `${landing.themes.cardHeight}px`,
